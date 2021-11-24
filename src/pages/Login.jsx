@@ -1,12 +1,15 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+// import { getApi } from '../redux/actions';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
     this.handleChange = this.handleChange.bind(this);
     this.enableButton = this.enableButton.bind(this);
+    this.redirect = this.redirect.bind(this);
 
     this.state = {
       userName: '',
@@ -18,6 +21,14 @@ export default class Login extends Component {
     const { name, value } = target;
     this.setState({ [name]: value });
     this.enableButton();
+  }
+
+  redirect() {
+    const { history } = this.props;
+    history.push('/game');
+    return fetch('https://opentdb.com/api_token.php?command=request')
+      .then((response) => response.json())
+      .then((resp) => localStorage.setItem('token', resp.token));
   }
 
   enableButton() {
@@ -48,7 +59,7 @@ export default class Login extends Component {
         <button
           type="button"
           data-testid="btn-play"
-          onClick={ () => <Redirect to="/game" /> }
+          onClick={ () => { this.redirect(); } }
           disabled={ this.enableButton() }
         >
           Jogar
@@ -57,3 +68,15 @@ export default class Login extends Component {
     );
   }
 }
+
+// const mapDispatchToProps = (dispatch) => ({
+//   api: (jsonObj) => dispatch(getApi(jsonObj)),
+// });
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(null, null)(Login);
