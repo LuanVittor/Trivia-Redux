@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ConfigButton from '../components/ConfigButton';
+import Header from '../components/Header';
 
-export default class Game extends Component {
+export class Game extends Component {
   render() {
     return (
       <div>
-        <p>oi</p>
+        <Header />
       </div>
     );
   }
 }
+
+export default connect(null)(Game);
