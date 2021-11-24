@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { getApi } from '../redux/actions';
+import ConfigButton from '../components/ConfigButton';
+import { player } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -24,7 +25,9 @@ class Login extends Component {
   }
 
   redirect() {
-    const { history } = this.props;
+    const { userName, email } = this.state;
+    const { history, getEmail } = this.props;
+    getEmail(userName, email);
     history.push('/game');
     return fetch('https://opentdb.com/api_token.php?command=request')
       .then((response) => response.json())
@@ -43,6 +46,7 @@ class Login extends Component {
     return (
       <div>
         <input
+          placeholder="Seu nome aqui"
           name="userName"
           value={ userName }
           onChange={ this.handleChange }
@@ -50,6 +54,7 @@ class Login extends Component {
           data-testid="input-player-name"
         />
         <input
+          placeholder="Seu email aqui"
           name="email"
           value={ email }
           onChange={ this.handleChange }
@@ -64,19 +69,23 @@ class Login extends Component {
         >
           Jogar
         </button>
+        <ConfigButton />
       </div>
     );
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   api: (jsonObj) => dispatch(getApi(jsonObj)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  // api: (jsonObj) => dispatch(getApi(jsonObj)),
+  getEmail: (name, email) => dispatch(player(name, email)),
+});
 
 Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  // history: PropTypes.shape({
+  //   push: PropTypes.func.isRequired,
+  // }).isRequired,
+  getEmail: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default connect(null, null)(Login);
+export default connect(null, mapDispatchToProps)(Login);
