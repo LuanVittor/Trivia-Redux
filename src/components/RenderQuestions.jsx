@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import '../App.css';
@@ -34,7 +35,6 @@ class RenderQuestions extends Component {
 
   stopInverval(param) {
     clearInterval(param);
-    // this.makesum();
   }
 
   makesum() {
@@ -92,6 +92,17 @@ class RenderQuestions extends Component {
     return false;
   }
 
+  nextQuestion() {
+    const { index } = this.state;
+    const five = 5;
+    if (index < five) {
+      this.setState({ index: index + 1 });
+      this.setState({ timer: 30 });
+      this.timeout();
+    }
+    this.setState({ show: false });
+  }
+
   render() {
     const { questions, index, renderQ, show, timer } = this.state;
     if (renderQ) {
@@ -126,6 +137,15 @@ class RenderQuestions extends Component {
               { elem }
             </button>
           ))}
+        {(show)
+        && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ () => this.nextQuestion() }
+          >
+            Próxima
+          </button>)}
       </div>
     );
   }
