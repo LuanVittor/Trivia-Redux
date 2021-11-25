@@ -2,10 +2,25 @@ import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { scores } from '../redux/actions';
 
 class Header extends Component {
+  constructor() {
+    super();
+    this.state = {
+      points: 0,
+    };
+  }
+
+  componentDidMount() {
+    const { dispatchScore } = this.props;
+    const { points } = this.state;
+    dispatchScore(points);
+  }
+
   render() {
-    const { email, name } = this.props;
+    const { email, name, score } = this.props;
+
     const hash = md5(email).toString();
     return (
       <header>
@@ -15,20 +30,26 @@ class Header extends Component {
           alt="User"
         />
         <h2 data-testid="header-player-name">{ name }</h2>
-        <h2 data-testid="header-score">0</h2>
+        <h2 data-testid="header-score">{ score }</h2>
       </header>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(scores(score)),
+});
+
 const mapStateToProps = (state) => ({
   email: state.login.email,
   name: state.login.name,
+  score: state.getScore.score,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
