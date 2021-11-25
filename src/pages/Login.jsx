@@ -24,14 +24,14 @@ class Login extends Component {
     this.enableButton();
   }
 
-  redirect() {
+  async redirect() {
     const { userName, email } = this.state;
     const { history, getEmail } = this.props;
     getEmail(userName, email);
-    history.push('/game');
-    return fetch('https://opentdb.com/api_token.php?command=request')
+    await fetch('https://opentdb.com/api_token.php?command=request')
       .then((response) => response.json())
       .then((resp) => localStorage.setItem('token', resp.token));
+    history.push('/game');
   }
 
   enableButton() {
