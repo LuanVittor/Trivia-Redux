@@ -49,8 +49,6 @@ export default class RenderQuestions extends Component {
         >
           { questions.results[index].correct_answer }
         </button>
-        {/* transformar incorrect answers em um map para
-        ficar dinamico em caso de true or false */}
         {questions.results[index].incorrect_answers
           .map((elem, i) => (
             <button
@@ -67,10 +65,3 @@ export default class RenderQuestions extends Component {
     );
   }
 }
-
-// // category: "General Knowledge"
-// correct_answer: "Saffron"
-// difficulty: "medium"
-// incorrect_answers: (3) ['Cinnamon', 'Cardamom', 'Vanilla']
-// question: "What is the world&#039;s most expensive spice by weight?"
-// type: "multiple"
