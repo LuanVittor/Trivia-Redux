@@ -1,7 +1,10 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import '../App.css';
+import { connect } from 'react-redux';
+import { scores } from '../redux/actions';
 
-export default class RenderQuestions extends Component {
+export class RenderQuestions extends Component {
   constructor() {
     super();
 
@@ -31,22 +34,52 @@ export default class RenderQuestions extends Component {
 
   stopInverval(param) {
     clearInterval(param);
+    // this.makesum();
+  }
+
+  makesum() {
+    const { timer, index, questions } = this.state;
+    let { score } = this.props;
+    const { dispatchScore } = this.props;
+    const tres = 3;
+    if (questions.results[index].difficulty === 'easy') {
+      dispatchScore(score += timer * 1);
+      return score;
+    } if (questions.results[index].difficulty === 'medium') {
+      dispatchScore(score += timer * 2);
+      return score;
+    } if (questions.results[index].difficulty === 'hard') {
+      dispatchScore(score += timer * tres);
+      return score;
+    }
   }
 
   timeout() {
-    const MIL = 1000;
-    const timer2 = setInterval(() => {
+    const oneSecond = 1000;
+    this.interval = setInterval(() => {
       const { timer } = this.state;
       this.setState({ timer: timer - 1 });
       if (timer === 1) {
-        this.stopInverval(timer2);
+        this.stopInverval(this.interval);
         this.showAnswers();
         return this.setState({ timer: 0 });
       }
-    }, MIL);
+    }, oneSecond);
   }
 
-  showAnswers() {
+  showAnswers(className) {
+    this.stopInverval(this.interval);
+    const local = {
+      player: {
+        // name,
+        // assertions: ,
+        score: this.makesum(),
+        // gravatarEmail
+      },
+    };
+    if (className === 'correct-answer') {
+      localStorage.setItem('state', JSON.stringify(local));
+    }
     this.setState({ show: true });
     this.disableButton();
   }
@@ -75,7 +108,7 @@ export default class RenderQuestions extends Component {
           type="button"
           disabled={ this.disableButton() }
           data-testid="correct-answer"
-          onClick={ () => this.showAnswers() }
+          onClick={ () => this.showAnswers('correct-answer') }
           className={ (show) ? 'green-border' : null }
         >
           { questions.results[index].correct_answer }
@@ -97,3 +130,20 @@ export default class RenderQuestions extends Component {
     );
   }
 }
+
+RenderQuestions.propTypes = {
+  dispatchScore: PropTypes.func.isRequired,
+  score: PropTypes.number.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(scores(score)),
+});
+
+const mapStateToProps = (state) => ({
+  score: state.getScore.score,
+  email: state.login.email,
+  name: state.login.name,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RenderQuestions);

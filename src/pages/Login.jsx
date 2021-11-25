@@ -27,6 +27,15 @@ class Login extends Component {
   async redirect() {
     const { userName, email } = this.state;
     const { history, getEmail } = this.props;
+    const local = {
+      player: {
+        // name,
+        // assertions: ,
+        score: 0,
+        // gravatarEmail
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(local));
     getEmail(userName, email);
     await fetch('https://opentdb.com/api_token.php?command=request')
       .then((response) => response.json())
