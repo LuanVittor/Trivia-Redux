@@ -47,6 +47,7 @@ const mapStateToProps = (state) => ({
 });
 
 Header.propTypes = {
+  dispatchScore: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,

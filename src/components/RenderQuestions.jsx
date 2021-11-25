@@ -4,7 +4,7 @@ import '../App.css';
 import { connect } from 'react-redux';
 import { scores } from '../redux/actions';
 
-export class RenderQuestions extends Component {
+class RenderQuestions extends Component {
   constructor() {
     super();
 
