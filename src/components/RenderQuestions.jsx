@@ -93,14 +93,17 @@ class RenderQuestions extends Component {
   }
 
   nextQuestion() {
+    const { history } = this.props;
     const { index } = this.state;
-    const five = 5;
-    if (index < five) {
+    this.setState({ show: false });
+    const four = 4;
+    if (index < four) {
       this.setState({ index: index + 1 });
       this.setState({ timer: 30 });
       this.timeout();
+    } else {
+      history.push('/feedback');
     }
-    this.setState({ show: false });
   }
 
   render() {
