@@ -29,10 +29,10 @@ class Login extends Component {
     const { history, getEmail } = this.props;
     const local = {
       player: {
-        // name,
-        // assertions: ,
+        name: userName,
+        assertions: 0,
         score: 0,
-        // gravatarEmail
+        gravatarEmail: email,
       },
     };
     localStorage.setItem('state', JSON.stringify(local));

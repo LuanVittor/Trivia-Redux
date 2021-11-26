@@ -19,8 +19,8 @@ class Header extends Component {
   }
 
   render() {
-    const { email, name } = this.props;
-    const score = JSON.parse(localStorage.getItem('state'));
+    const { email } = this.props;
+    const playerInfo = JSON.parse(localStorage.getItem('state'));
     const hash = md5(email).toString();
     return (
       <header>
@@ -29,8 +29,8 @@ class Header extends Component {
           src={ `https://www.gravatar.com/avatar/${hash}` }
           alt="User"
         />
-        <h2 data-testid="header-player-name">{ name }</h2>
-        <h2 data-testid="header-score">{ score.player.score }</h2>
+        <h2 data-testid="header-player-name">{ playerInfo.player.name }</h2>
+        <h2 data-testid="header-score">{ playerInfo.player.score}</h2>
       </header>
     );
   }
@@ -49,7 +49,6 @@ const mapStateToProps = (state) => ({
 Header.propTypes = {
   dispatchScore: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
