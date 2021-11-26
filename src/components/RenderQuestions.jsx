@@ -73,12 +73,13 @@ class RenderQuestions extends Component {
     this.stopInverval(this.interval);
     if (className === 'correct-answer') {
       this.setState({ acertos: acertos + 1 });
+      const oldLOcal = JSON.parse(localStorage.getItem('state'));
       const local = {
         player: {
-          // name,
+          name: oldLOcal.player.name,
           assertions: acertos,
           score: this.makesum(),
-          // gravatarEmail
+          gravatarEmail: oldLOcal.player.gravatarEmail,
         },
       };
       localStorage.setItem('state', JSON.stringify(local));
