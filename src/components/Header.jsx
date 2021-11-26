@@ -19,8 +19,8 @@ class Header extends Component {
   }
 
   render() {
-    const { email, name, score } = this.props;
-
+    const { email, name } = this.props;
+    const pp = JSON.parse(localStorage.getItem('state'));
     const hash = md5(email).toString();
     return (
       <header>
@@ -30,7 +30,7 @@ class Header extends Component {
           alt="User"
         />
         <h2 data-testid="header-player-name">{ name }</h2>
-        <h2 data-testid="header-score">{ score }</h2>
+        <h2 data-testid="header-score">{ pp.player.score }</h2>
       </header>
     );
   }
