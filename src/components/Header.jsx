@@ -20,7 +20,7 @@ class Header extends Component {
 
   render() {
     const { email, name } = this.props;
-    const pp = JSON.parse(localStorage.getItem('state'));
+    const score = JSON.parse(localStorage.getItem('state'));
     const hash = md5(email).toString();
     return (
       <header>
@@ -30,7 +30,7 @@ class Header extends Component {
           alt="User"
         />
         <h2 data-testid="header-player-name">{ name }</h2>
-        <h2 data-testid="header-score">{ pp.player.score }</h2>
+        <h2 data-testid="header-score">{ score.player.score }</h2>
       </header>
     );
   }
@@ -50,7 +50,6 @@ Header.propTypes = {
   dispatchScore: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
