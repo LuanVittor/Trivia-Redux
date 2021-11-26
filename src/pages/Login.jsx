@@ -85,14 +85,10 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  // api: (jsonObj) => dispatch(getApi(jsonObj)),
   getEmail: (name, email) => dispatch(player(name, email)),
 });
 
 Login.propTypes = {
-  // history: PropTypes.shape({
-  //   push: PropTypes.func.isRequired,
-  // }).isRequired,
   getEmail: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
