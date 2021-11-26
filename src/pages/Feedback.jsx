@@ -1,4 +1,4 @@
-/* eslint-disable space-before-blocks */
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Header from '../components/Header';
 
@@ -9,7 +9,7 @@ export default class Feedback extends Component {
     this.pushPlayAgain = this.pushPlayAgain.bind(this);
   }
 
-  getInformation(){
+  getInformation() {
     const data = JSON.parse(localStorage.getItem('state'));
     return (
       <span>
@@ -72,3 +72,9 @@ export default class Feedback extends Component {
     );
   }
 }
+
+Feedback.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
