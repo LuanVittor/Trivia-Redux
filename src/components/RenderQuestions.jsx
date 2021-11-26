@@ -132,7 +132,7 @@ class RenderQuestions extends Component {
             <button
               onClick={ () => this.showAnswers() }
               disabled={ this.disableButton() }
-              className={ (show) ? 'red-border' : null }
+              className={ (show) && 'red-border' }
               key={ i }
               type="button"
               data-testid={ `wrong-answer-${i}` }
