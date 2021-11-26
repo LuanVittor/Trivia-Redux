@@ -18,6 +18,7 @@ class RenderQuestions extends Component {
       renderQ: true,
       show: false,
       timer: 30,
+      acertos: 1,
     };
   }
 
@@ -68,16 +69,18 @@ class RenderQuestions extends Component {
   }
 
   showAnswers(className) {
+    const { acertos } = this.state;
     this.stopInverval(this.interval);
-    const local = {
-      player: {
-        // name,
-        // assertions: ,
-        score: this.makesum(),
-        // gravatarEmail
-      },
-    };
     if (className === 'correct-answer') {
+      this.setState({ acertos: acertos + 1 });
+      const local = {
+        player: {
+          // name,
+          assertions: acertos,
+          score: this.makesum(),
+          // gravatarEmail
+        },
+      };
       localStorage.setItem('state', JSON.stringify(local));
     }
     this.setState({ show: true });
