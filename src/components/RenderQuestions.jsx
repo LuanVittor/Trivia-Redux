@@ -156,6 +156,9 @@ class RenderQuestions extends Component {
 
 RenderQuestions.propTypes = {
   dispatchScore: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   score: PropTypes.number.isRequired,
 };
 
