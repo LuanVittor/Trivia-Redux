@@ -103,14 +103,14 @@ class RenderQuestions extends Component {
         name: oldLOcal.player.name,
         score: oldLOcal.player.score,
         picture: oldLOcal.player.gravatarEmail }];
-    localStorage.setItem('ranking', JSON.stringify(ranking));
+      localStorage.setItem('ranking', JSON.stringify(ranking));
     } else {
       const oldRanking = JSON.parse(localStorage.getItem('ranking'));
       const ranking = [...oldRanking, {
         name: oldLOcal.player.name,
         score: oldLOcal.player.score,
         picture: oldLOcal.player.gravatarEmail,
-    }];
+      }];
       localStorage.setItem('ranking', JSON.stringify(ranking));
     }
   }
