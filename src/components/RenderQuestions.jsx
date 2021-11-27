@@ -96,6 +96,25 @@ class RenderQuestions extends Component {
     return false;
   }
 
+  updateRank() {
+    const oldLOcal = JSON.parse(localStorage.getItem('state'));
+    if (JSON.parse(localStorage.getItem('ranking')) === null) {
+      const ranking = [{
+        name: oldLOcal.player.name,
+        score: oldLOcal.player.score,
+        picture: oldLOcal.player.gravatarEmail }];
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    } else {
+      const oldRanking = JSON.parse(localStorage.getItem('ranking'));
+      const ranking = [...oldRanking, {
+        name: oldLOcal.player.name,
+        score: oldLOcal.player.score,
+        picture: oldLOcal.player.gravatarEmail,
+      }];
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    }
+  }
+
   nextQuestion() {
     const { history } = this.props;
     const { index } = this.state;
@@ -106,6 +125,7 @@ class RenderQuestions extends Component {
       this.setState({ timer: 30 });
       this.timeout();
     } else {
+      this.updateRank();
       history.push('/feedback');
     }
   }
