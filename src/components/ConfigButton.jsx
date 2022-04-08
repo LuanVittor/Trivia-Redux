@@ -14,9 +14,6 @@ class ConfigButton extends Component {
   }
 
   redirect() {
-    // const { redirect } = this.state;
-    // const { history } = this.props;
-    // history.push('/settings');
     this.setState({ redirect: true });
   }
 
